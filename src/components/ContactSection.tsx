@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Copy, Check, Send, Github, Linkedin, ExternalLink } from 'lucide-react';
+import { Copy, Check, Send, ExternalLink } from 'lucide-react';
 import { portfolioConfig } from '../portfolio.config';
 
 export const ContactSection: React.FC = () => {
@@ -30,182 +30,152 @@ export const ContactSection: React.FC = () => {
       setLoading(false);
       setSent(true);
       setFormData({ name: '', email: '', message: '' });
-    }, 500);
+    }, 450);
   };
 
   return (
-    <section id="contact" className="py-24 border-t border-slate-800/80 relative z-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="max-w-2xl space-y-2 pb-12">
-          <div className="flex items-center gap-2 text-xs font-mono text-cyan-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-            <span>Get in Touch</span>
+    <section id="contact" className="pt-16 pb-12 border-t border-white/10">
+      <div className="mb-6">
+        <span className="font-mono text-[11px] uppercase tracking-widest text-[#eeedea]/60 block mb-1">
+          FIGURE 04: TRANSMISSION & INQUIRIES
+        </span>
+        <h2 className="font-syne font-extrabold text-2xl text-[#eeedea] uppercase tracking-tight">
+          Direct Contact
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left: Quick Actions */}
+        <div className="p-8 border border-white/10 bg-white/[0.015] space-y-6">
+          <div className="space-y-1">
+            <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest block">
+              COMMUNICATION CHANNEL
+            </span>
+            <div className="font-syne font-bold text-xl text-[#eeedea]">
+              Antipolo, Philippines
+            </div>
+            <p className="text-xs text-[#eeedea]/60 font-mono">
+              Status: {personal.status}
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Contact & Inquiries
-          </h2>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Feel free to connect regarding software projects, cybersecurity internships, or technical collaborations.
-          </p>
+
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/10 font-mono text-xs text-[#eeedea]">
+              <span>{personal.email}</span>
+              <button
+                onClick={handleCopyEmail}
+                className="px-2.5 py-1 text-[10px] uppercase font-bold text-[#0c0c0e] bg-[#00ffaa] hover:bg-[#00ffaa]/90 transition-colors cursor-pointer"
+              >
+                {copiedEmail ? 'Copied' : 'Copy'}
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/10 font-mono text-xs text-[#eeedea]">
+              <span>{personal.phone}</span>
+              <button
+                onClick={handleCopyPhone}
+                className="px-2.5 py-1 text-[10px] uppercase font-bold text-[#0c0c0e] bg-[#00ffaa] hover:bg-[#00ffaa]/90 transition-colors cursor-pointer"
+              >
+                {copiedPhone ? 'Copied' : 'Copy'}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 pt-2">
+            <a
+              href={personal.social.github}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 text-center py-2.5 px-4 font-mono text-xs uppercase tracking-wider text-[#eeedea] bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 transition-colors flex items-center justify-center gap-1.5"
+            >
+              <span>GitHub</span>
+              <ExternalLink className="w-3 h-3 text-[#00ffaa]" />
+            </a>
+            <a
+              href={personal.social.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 text-center py-2.5 px-4 font-mono text-xs uppercase tracking-wider text-[#eeedea] bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 transition-colors flex items-center justify-center gap-1.5"
+            >
+              <span>LinkedIn</span>
+              <ExternalLink className="w-3 h-3 text-[#00ffaa]" />
+            </a>
+          </div>
         </div>
 
-        {/* 2-Column Contact */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Left: Contact Information Cards */}
-          <div className="lg:col-span-5 space-y-4">
-            
-            {/* Status Card */}
-            <div className="p-6 rounded-2xl bg-slate-950/50 border border-slate-800/80 backdrop-blur-md space-y-3">
-              <div className="text-xs font-mono text-cyan-400 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Availability Status</span>
-              </div>
-              <p className="text-sm text-slate-200">
-                {personal.status}
+        {/* Right: Transmission Form */}
+        <div className="p-8 border border-white/10 bg-white/[0.015]">
+          {sent ? (
+            <div className="py-10 text-center space-y-3">
+              <span className="font-mono text-xs text-[#00ffaa] block">
+                [ DISPATCH CONFIRMED ]
+              </span>
+              <h3 className="font-syne font-bold text-xl text-[#eeedea]">
+                Message Transmitted
+              </h3>
+              <p className="text-xs text-[#eeedea]/60 font-mono max-w-xs mx-auto">
+                Thank you. Your inquiry has been routed to Jedrick's inbox.
               </p>
-              <div className="text-xs font-mono text-slate-400 pt-2 border-t border-slate-800 flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                <span>{personal.location}</span>
-              </div>
-            </div>
-
-            {/* Direct Email Box */}
-            <div className="p-5 rounded-xl bg-slate-950/50 border border-slate-800/80 backdrop-blur-md space-y-2">
-              <div className="text-xs font-mono text-slate-400">Email:</div>
-              <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-slate-900/80 border border-slate-800 font-mono text-xs text-slate-200">
-                <span className="truncate">{personal.email}</span>
-                <button
-                  onClick={handleCopyEmail}
-                  className="px-2.5 py-1 text-xs font-sans text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 rounded border border-cyan-500/30 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
-                >
-                  {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Direct Phone Box */}
-            <div className="p-5 rounded-xl bg-slate-950/50 border border-slate-800/80 backdrop-blur-md space-y-2">
-              <div className="text-xs font-mono text-slate-400">Phone:</div>
-              <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-slate-900/80 border border-slate-800 font-mono text-xs text-slate-200">
-                <span>{personal.phone}</span>
-                <button
-                  onClick={handleCopyPhone}
-                  className="px-2.5 py-1 text-xs font-sans text-cyan-400 hover:text-cyan-300 bg-cyan-950/60 rounded border border-cyan-500/30 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
-                >
-                  {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedPhone ? 'Copied' : 'Copy'}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href={personal.social.github}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-medium text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors"
+              <button
+                onClick={() => setSent(false)}
+                className="pt-2 text-xs font-mono text-[#00ffaa] hover:underline cursor-pointer"
               >
-                <Github className="w-4 h-4 text-slate-400" />
-                <span>GitHub</span>
-                <ExternalLink className="w-3 h-3 text-slate-500" />
-              </a>
-              <a
-                href={personal.social.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-medium text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 rounded-xl transition-colors"
+                Send another message ›
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest block">
+                DIRECT INQUIRY DISPATCH
+              </span>
+
+              <div className="space-y-1">
+                <label className="font-mono text-[10px] text-[#eeedea]/60 uppercase">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Alex Vance"
+                  className="w-full px-3.5 py-2 font-mono text-xs text-[#eeedea] bg-white/[0.02] border border-white/10 focus:border-[#00ffaa] focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-mono text-[10px] text-[#eeedea]/60 uppercase">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="alex@company.com"
+                  className="w-full px-3.5 py-2 font-mono text-xs text-[#eeedea] bg-white/[0.02] border border-white/10 focus:border-[#00ffaa] focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-mono text-[10px] text-[#eeedea]/60 uppercase">Message</label>
+                <textarea
+                  required
+                  rows={3}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Inquiry scope or internship discussion..."
+                  className="w-full px-3.5 py-2 font-mono text-xs text-[#eeedea] bg-white/[0.02] border border-white/10 focus:border-[#00ffaa] focus:outline-none transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-2.5 px-4 font-mono font-bold text-xs uppercase tracking-wider text-[#0c0c0e] bg-[#00ffaa] hover:bg-[#00ffaa]/90 transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <Linkedin className="w-4 h-4 text-cyan-400" />
-                <span>LinkedIn</span>
-                <ExternalLink className="w-3 h-3 text-slate-500" />
-              </a>
-            </div>
-
-          </div>
-
-          {/* Right: Message Form */}
-          <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/60 border border-slate-800/80 backdrop-blur-md shadow-xl shadow-cyan-950/20">
-              {sent ? (
-                <div className="py-12 text-center space-y-4 animate-in fade-in">
-                  <div className="w-12 h-12 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-400 mx-auto flex items-center justify-center">
-                    <Check className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-100">Message Received</h3>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto">
-                    Thank you! Your message has been sent to Jedrick. I will get back to you shortly.
-                  </p>
-                  <button
-                    onClick={() => setSent(false)}
-                    className="text-xs font-mono text-cyan-400 hover:underline pt-2 cursor-pointer"
-                  >
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-xs font-mono text-slate-400">Your Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g., Sarah Chen"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-cyan-400 transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label className="text-xs font-mono text-slate-400">Your Email</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="sarah@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-cyan-400 transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label className="text-xs font-mono text-slate-400">Message</label>
-                    <textarea
-                      required
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Hi Jedrick, I would like to discuss..."
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-cyan-400 transition-colors resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full py-3 px-4 text-xs font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-cyan-950/40 disabled:opacity-50"
-                  >
-                    {loading ? (
-                      <span>Sending...</span>
-                    ) : (
-                      <>
-                        <span>Send Message</span>
-                        <Send className="w-3.5 h-3.5" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-
+                <span>{loading ? 'Transmitting...' : 'Send Message'}</span>
+                <Send className="w-3.5 h-3.5" />
+              </button>
+            </form>
+          )}
         </div>
-
       </div>
     </section>
   );

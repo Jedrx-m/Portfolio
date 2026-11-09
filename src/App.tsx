@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { CyberHorizonCanvas } from './components/CyberHorizonCanvas';
-import { Navbar } from './components/Navbar';
+import { Sidebar } from './components/Sidebar';
 import { Hero } from './components/Hero';
 import { ProjectShowcase } from './components/ProjectShowcase';
 import { FloatingProjectPreview } from './components/FloatingProjectPreview';
@@ -24,11 +24,11 @@ export default function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('projects');
 
-  // Track active section for nav highlighting
+  // Track active section for sidebar highlighting
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['projects', 'skills', 'experience', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 250;
 
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
@@ -55,40 +55,44 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="relative min-h-screen bg-[#0c0c0e] text-[#eeedea] tech-dot-grid selection:bg-[#00ffaa] selection:text-[#0c0c0e]">
       
-      {/* Moving 3D Bluish Synthwave Horizon Canvas */}
-      <CyberHorizonCanvas />
+      {/* Moving Horizon Background Canvas */}
+      <CyberHorizonCanvas className="opacity-40" />
 
-      {/* Top Navigation */}
-      <Navbar
+      {/* Technical Grid Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-0 tech-dot-grid opacity-60" aria-hidden="true" />
+
+      {/* Variation 2: Sidebar (Fixed Left 280px on desktop) */}
+      <Sidebar
         activeSection={activeSection}
         onResumeClick={() => setIsResumeOpen(true)}
       />
 
-      <main className="relative z-10">
-        {/* Spacious, Iconic Hero Section */}
+      {/* Variation 2: Main Content Area */}
+      <main className="relative z-10 lg:ml-[280px] p-6 sm:p-12 lg:p-16 max-w-6xl overflow-y-auto">
+        {/* Hero Section */}
         <Hero onResumeClick={() => setIsResumeOpen(true)} />
 
-        {/* Clean Project Showcase with Cursor Hover Preview */}
+        {/* Figure 01: Selected Works */}
         <ProjectShowcase
           projects={portfolioConfig.projects}
           onHoverProject={handleHoverProject}
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
-        {/* Skills, Certifications & Affiliations */}
+        {/* Figure 02: Technical Competencies & Credentials */}
         <TechnicalSkillsSection />
 
-        {/* Background & Experience */}
+        {/* Figure 03: Education & Timeline */}
         <ExperienceTimeline onResumeClick={() => setIsResumeOpen(true)} />
 
-        {/* Contact Section */}
+        {/* Figure 04: Transmission & Inquiries */}
         <ContactSection />
-      </main>
 
-      {/* Clean Footer */}
-      <Footer onResumeClick={() => setIsResumeOpen(true)} />
+        {/* Variation 2: Footer */}
+        <Footer />
+      </main>
 
       {/* Interactive Cursor-Tracking Glass Preview */}
       <FloatingProjectPreview
