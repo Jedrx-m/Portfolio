@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, FileDown, ExternalLink } from 'lucide-react';
+import { ArrowDown, FileDown } from 'lucide-react';
 import { portfolioConfig } from '../portfolio.config';
 
 interface HeroProps {
@@ -8,6 +8,13 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
   const { personal, stats } = portfolioConfig;
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="hero pt-6 pb-16 max-w-4xl">
@@ -29,26 +36,26 @@ export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
         Full-stack developer majoring in Cybersecurity. Expertise in React, TypeScript, Cisco Enterprise Networking, and Cloud Infrastructure.
       </p>
 
-      {/* Action Buttons from Variation 2 */}
+      {/* Action Buttons */}
       <div className="flex flex-wrap items-center gap-4">
-        <a
-          href="#projects"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#00ffaa] hover:bg-[#00ffaa]/90 text-[#0c0c0e] font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
+        <button
+          onClick={() => scrollTo('projects')}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#00ffaa] hover:bg-[#00ffaa]/90 text-[#0c0c0e] font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer active:scale-95"
         >
           <span>View Works</span>
           <ArrowDown className="w-3.5 h-3.5" />
-        </a>
+        </button>
 
-        <a
-          href="#contact"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-transparent hover:bg-white/[0.04] text-[#eeedea] border border-white/10 hover:border-white/25 font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
+        <button
+          onClick={() => scrollTo('contact')}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-transparent hover:bg-white/[0.04] text-[#eeedea] border border-white/10 hover:border-white/25 font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer active:scale-95"
         >
           <span>Connect</span>
-        </a>
+        </button>
 
         <button
           onClick={onResumeClick}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.03] hover:bg-white/[0.06] text-[#00ffaa] border border-[#00ffaa]/30 hover:border-[#00ffaa] font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.03] hover:bg-white/[0.06] text-[#00ffaa] border border-[#00ffaa]/30 hover:border-[#00ffaa] font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer active:scale-95"
         >
           <FileDown className="w-3.5 h-3.5" />
           <span>Resume PDF</span>

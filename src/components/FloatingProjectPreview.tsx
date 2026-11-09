@@ -6,11 +6,13 @@ import { ArrowUpRight } from 'lucide-react';
 interface FloatingProjectPreviewProps {
   project: ProjectItem | null;
   cursorPos: { x: number; y: number };
+  onSelectProject?: (project: ProjectItem) => void;
 }
 
 export const FloatingProjectPreview: React.FC<FloatingProjectPreviewProps> = ({
   project,
   cursorPos,
+  onSelectProject,
 }) => {
   const springX = useSpring(cursorPos.x, { stiffness: 280, damping: 28 });
   const springY = useSpring(cursorPos.y, { stiffness: 280, damping: 28 });
@@ -32,7 +34,8 @@ export const FloatingProjectPreview: React.FC<FloatingProjectPreviewProps> = ({
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, scale: 0.9, filter: 'blur(4px)' }}
       transition={{ duration: 0.16, ease: 'easeOut' }}
-      className="hidden lg:block fixed z-50 pointer-events-none w-80 overflow-hidden bg-[#0c0c0e]/95 backdrop-blur-2xl border border-[#00ffaa]/50 shadow-2xl shadow-black/80"
+      onClick={() => onSelectProject && onSelectProject(project)}
+      className="hidden lg:block fixed z-50 w-84 overflow-hidden bg-[#0c0c0e]/98 backdrop-blur-2xl border border-[#00ffaa] shadow-2xl shadow-black/90 cursor-pointer pointer-events-auto"
     >
       {/* Visual Image Preview */}
       <div className="relative h-44 w-full bg-black overflow-hidden">
@@ -51,9 +54,14 @@ export const FloatingProjectPreview: React.FC<FloatingProjectPreviewProps> = ({
 
       {/* Meta Content */}
       <div className="p-4 space-y-2">
-        <span className="font-mono text-[9px] uppercase tracking-widest text-[#00ffaa] block">
-          {project.category}
-        </span>
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[9px] uppercase tracking-widest text-[#00ffaa] block">
+            {project.category}
+          </span>
+          <span className="font-mono text-[9px] text-[#00ffaa] flex items-center gap-1 font-bold">
+            CLICK TO INSPECT <ArrowUpRight className="w-3 h-3" />
+          </span>
+        </div>
         <h4 className="font-syne font-bold text-base text-[#eeedea] truncate">
           {project.title}
         </h4>
@@ -65,8 +73,8 @@ export const FloatingProjectPreview: React.FC<FloatingProjectPreviewProps> = ({
           <span className="truncate max-w-[200px]">
             {project.technologies.slice(0, 3).join(' · ')}
           </span>
-          <span className="text-[#00ffaa] inline-flex items-center gap-0.5">
-            Inspect <ArrowUpRight className="w-3 h-3" />
+          <span className="text-[#00ffaa]">
+            View Blueprint
           </span>
         </div>
       </div>

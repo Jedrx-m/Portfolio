@@ -57,8 +57,8 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#0c0c0e] text-[#eeedea] tech-dot-grid selection:bg-[#00ffaa] selection:text-[#0c0c0e]">
       
-      {/* Moving Horizon Background Canvas */}
-      <CyberHorizonCanvas className="opacity-40" />
+      {/* Moving Horizon Background Canvas with Stars & Shooting Stars */}
+      <CyberHorizonCanvas className="opacity-75" />
 
       {/* Technical Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 tech-dot-grid opacity-60" aria-hidden="true" />
@@ -70,7 +70,7 @@ export default function App() {
       />
 
       {/* Variation 2: Main Content Area */}
-      <main className="relative z-10 lg:ml-[280px] p-6 sm:p-12 lg:p-16 max-w-6xl overflow-y-auto">
+      <main className="relative z-10 md:ml-[280px] p-6 sm:p-12 lg:p-16 max-w-6xl">
         {/* Hero Section */}
         <Hero onResumeClick={() => setIsResumeOpen(true)} />
 
@@ -94,10 +94,11 @@ export default function App() {
         <Footer />
       </main>
 
-      {/* Interactive Cursor-Tracking Glass Preview */}
+      {/* Interactive Cursor-Tracking Glass Preview (Also clickable) */}
       <FloatingProjectPreview
         project={hoveredProject}
         cursorPos={cursorPos}
+        onSelectProject={(project) => setSelectedProject(project)}
       />
 
       {/* Project Case Study Lightbox Modal */}

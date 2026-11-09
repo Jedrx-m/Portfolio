@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Eye } from 'lucide-react';
 import { ProjectItem } from '../portfolio.config';
 
 interface ProjectShowcaseProps {
@@ -24,15 +24,18 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
 
   return (
     <section id="projects" className="pt-16 pb-20 border-t border-white/10">
-      {/* Variation 2 Figure Header */}
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 mb-6">
+      {/* Figure Header */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 mb-8">
         <div>
           <span className="font-mono text-[11px] uppercase tracking-widest text-[#eeedea]/60 block mb-1">
             FIGURE 01: SELECTED WORKS
           </span>
-          <h2 className="font-syne font-extrabold text-2xl text-[#eeedea] uppercase tracking-tight">
+          <h2 className="font-syne font-extrabold text-2xl sm:text-3xl text-[#eeedea] uppercase tracking-tight">
             Production & Engineering Projects
           </h2>
+          <p className="text-xs font-mono text-[#eeedea]/50 mt-1">
+            Click any project card to inspect system blueprints, live demo & source repository.
+          </p>
         </div>
 
         {/* Filter Tabs */}
@@ -43,10 +46,10 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`px-3 py-1 text-[11px] font-mono uppercase tracking-wider rounded-xs transition-colors whitespace-nowrap cursor-pointer ${
+                className={`px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider rounded-xs transition-colors whitespace-nowrap cursor-pointer active:scale-95 ${
                   isActive
                     ? 'bg-[#00ffaa] text-[#0c0c0e] font-bold'
-                    : 'text-[#eeedea]/50 hover:text-[#eeedea] bg-white/[0.02] border border-white/10'
+                    : 'text-[#eeedea]/60 hover:text-[#eeedea] bg-white/[0.02] border border-white/10 hover:border-white/20'
                 }`}
               >
                 {cat}
@@ -56,7 +59,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         </div>
       </div>
 
-      {/* Variation 2 Grid Container */}
+      {/* Grid Container */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredProjects.map((project) => (
           <div
@@ -65,33 +68,58 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             onMouseMove={(e) => onHoverProject(project, e)}
             onMouseLeave={() => onHoverProject(null)}
             onClick={() => onSelectProject(project)}
-            className="group relative p-8 border border-white/10 hover:border-[#00ffaa] bg-white/[0.015] hover:bg-white/[0.03] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative p-6 sm:p-8 border border-white/10 hover:border-[#00ffaa] bg-white/[0.015] hover:bg-white/[0.03] transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              {/* Meta Tag from Variation 2 */}
-              <span className="font-mono text-[10px] text-[#eeedea]/60 uppercase tracking-widest mb-3 block group-hover:text-[#00ffaa] transition-colors">
-                {project.year} / {project.category.toUpperCase()}
-              </span>
+              {/* Thumbnail Media Preview inside card */}
+              <div className="relative h-44 w-full bg-black mb-5 overflow-hidden border border-white/10 group-hover:border-[#00ffaa]/50 transition-colors">
+                <img
+                  src={project.previewMedia.image}
+                  alt={project.previewMedia.alt}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
+                
+                <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#0c0c0e]/90 border border-white/10 text-[10px] font-mono text-[#00ffaa]">
+                  {project.category.toUpperCase()}
+                </div>
 
-              {/* Title from Variation 2 */}
-              <h3 className="font-syne font-bold text-xl text-[#eeedea] mb-3 group-hover:text-white flex items-center justify-between">
+                <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-[#00ffaa] text-[#0c0c0e] font-mono font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
+                  <Eye className="w-3 h-3" />
+                  <span>Inspect</span>
+                </div>
+              </div>
+
+              {/* Meta Tag from Variation 2 */}
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-[10px] text-[#eeedea]/60 uppercase tracking-widest block group-hover:text-[#00ffaa] transition-colors">
+                  {project.year} / {project.category.toUpperCase()}
+                </span>
+                <span className="font-mono text-[10px] text-[#00ffaa] opacity-0 group-hover:opacity-100 transition-opacity">
+                  CLICK TO VIEW BLUEPRINT
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 className="font-syne font-bold text-xl text-[#eeedea] mb-2 group-hover:text-white flex items-center justify-between">
                 <span>{project.title}</span>
-                <ArrowUpRight className="w-4 h-4 text-[#00ffaa] opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowUpRight className="w-4 h-4 text-[#00ffaa] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-[#eeedea]/60 leading-relaxed line-clamp-3 mb-6">
-                {project.description}
+              <p className="text-xs sm:text-sm text-[#eeedea]/60 leading-relaxed line-clamp-2 mb-4">
+                {project.tagline}
               </p>
             </div>
 
             {/* Bottom details */}
             <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-[#eeedea]/40">
-              <span className="text-[#00ffaa]/90">
+              <span className="text-[#00ffaa]">
                 {project.keyMetrics[0]?.label}: {project.keyMetrics[0]?.value}
               </span>
-              <span className="truncate max-w-[150px]">
-                {project.technologies.slice(0, 2).join(' · ')}
+              <span className="truncate max-w-[160px]">
+                {project.technologies.slice(0, 3).join(' · ')}
               </span>
             </div>
           </div>
