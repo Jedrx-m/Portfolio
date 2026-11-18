@@ -117,14 +117,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onResumeClick }
           </nav>
         </div>
 
-        {/* Bottom: Coordinates & Resume PDF Button */}
-        <div className="bottom-nav pt-6 border-t border-white/10 space-y-3">
-          <span className="font-mono text-[10px] text-[#eeedea]/60 uppercase tracking-widest block">
-            VERIFIED ARCHIVE
-          </span>
-          <div className="font-mono text-[10px] text-[#eeedea]/40 tracking-wider">
-            14.5995° N, 120.9842° E
-          </div>
+        <div className="bottom-nav pt-6 border-t border-white/10">
           <button
             onClick={onResumeClick}
             className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-mono font-semibold uppercase tracking-wider text-[#eeedea] hover:text-[#0c0c0e] hover:bg-[#00ffaa] border border-white/20 hover:border-[#00ffaa] rounded-xs transition-all duration-200 cursor-pointer active:scale-95"

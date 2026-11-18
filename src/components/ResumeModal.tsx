@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, FileDown, Printer, ExternalLink } from 'lucide-react';
+import { X, FileDown, Printer } from 'lucide-react';
 import { portfolioConfig } from '../portfolio.config';
 
 interface ResumeModalProps {
@@ -61,8 +61,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <a
               href={resume.pdfUrl}
               download={resume.fileName}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 font-mono font-bold text-xs uppercase tracking-wider text-[#0c0c0e] bg-[#00ffaa] hover:bg-[#00ffaa]/90 transition-colors cursor-pointer"
             >
               <FileDown className="w-4 h-4" />

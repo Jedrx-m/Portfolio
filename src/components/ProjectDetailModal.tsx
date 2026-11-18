@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { X, ExternalLink, Github, Cpu, Activity } from 'lucide-react';
-import { ProjectItem, portfolioConfig } from '../portfolio.config';
+import { X } from 'lucide-react';
+import { ProjectItem } from '../portfolio.config';
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
@@ -51,15 +51,17 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
         </div>
 
         {/* Image */}
-        <div className="relative h-64 sm:h-80 w-full bg-black overflow-hidden">
-          <img
-            src={project.previewMedia.image}
-            alt={project.previewMedia.alt}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
-        </div>
+        {project.previewMedia && (
+          <div className="relative h-64 sm:h-80 w-full bg-black overflow-hidden">
+            <img
+              src={project.previewMedia.image}
+              alt={project.previewMedia.alt}
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
+          </div>
+        )}
 
         {/* Content */}
         <div className="p-6 sm:p-8 space-y-6">
@@ -121,17 +123,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-6 border-t border-white/10 flex items-center justify-between">
-            <a
-              href={project.githubUrl || portfolioConfig.personal.social.github}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00ffaa] hover:bg-[#00ffaa]/90 text-[#0c0c0e] font-mono font-bold text-xs uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
-            >
-              <Github className="w-4 h-4" />
-              <span>Inspect Source</span>
-            </a>
-
+          <div className="pt-6 border-t border-white/10 flex items-center justify-end">
             <button
               onClick={onClose}
               className="font-mono text-xs text-[#eeedea]/40 hover:text-[#eeedea] transition-colors cursor-pointer"
