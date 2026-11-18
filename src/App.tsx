@@ -8,7 +8,6 @@ import { CyberHorizonCanvas } from './components/CyberHorizonCanvas';
 import { Sidebar } from './components/Sidebar';
 import { Hero } from './components/Hero';
 import { ProjectShowcase } from './components/ProjectShowcase';
-import { FloatingProjectPreview } from './components/FloatingProjectPreview';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { TechnicalSkillsSection } from './components/TechnicalSkillsSection';
 import { ExperienceTimeline } from './components/ExperienceTimeline';
@@ -18,8 +17,6 @@ import { ResumeModal } from './components/ResumeModal';
 import { portfolioConfig, ProjectItem } from './portfolio.config';
 
 export default function App() {
-  const [hoveredProject, setHoveredProject] = useState<ProjectItem | null>(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('projects');
@@ -47,13 +44,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleHoverProject = (project: ProjectItem | null, e?: React.MouseEvent) => {
-    setHoveredProject(project);
-    if (e) {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    }
-  };
-
   return (
     <div className="relative min-h-screen bg-[#0c0c0e] text-[#eeedea] tech-dot-grid selection:bg-[#00ffaa] selection:text-[#0c0c0e]">
       
@@ -77,7 +67,6 @@ export default function App() {
         {/* Figure 01: Selected Works */}
         <ProjectShowcase
           projects={portfolioConfig.projects}
-          onHoverProject={handleHoverProject}
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
@@ -93,13 +82,6 @@ export default function App() {
         {/* Variation 2: Footer */}
         <Footer />
       </main>
-
-      {/* Interactive Cursor-Tracking Glass Preview (Also clickable) */}
-      <FloatingProjectPreview
-        project={hoveredProject}
-        cursorPos={cursorPos}
-        onSelectProject={(project) => setSelectedProject(project)}
-      />
 
       {/* Project Case Study Lightbox Modal */}
       <ProjectDetailModal

@@ -7,7 +7,8 @@
  * HOW TO UPDATE YOUR PORTFOLIO:
  * 1. To add or edit projects: modify the `projects` array below.
  * 2. To swap your resume: update `resume.pdfUrl` and `resume.fileName`.
- * 3. To update images: place files in `/src/assets/images/` and reference them.
+ * 3. Add a thumbnail and a short MP4 under `public/assets/projects/` and reference
+ *    both in previewMedia to use the shared hover zoom and playback template.
  * 
  * You only need to touch this single file to keep your entire site up to date!
  */
@@ -23,12 +24,14 @@ export interface ProjectItem {
   architectureOverview: string;
   keyMetrics: { label: string; value: string }[];
   technologies: string[];
-  previewMedia?: {
+  previewMedia: {
     image: string;
     alt: string;
+    video: string;
     caption?: string;
   };
   demoUrl?: string;
+  githubUrl?: string;
 }
 
 export interface ExperienceItem {
@@ -274,6 +277,7 @@ export const portfolioConfig: PortfolioConfig = {
       previewMedia: {
         image: "/assets/projects/brightsmile.jpg",
         alt: "Bright Smile Dental Clinic homepage with a Book a visit button",
+        video: "/assets/projects/dentasync.mp4",
       },
       demoUrl: "https://brightsmile.pro",
     },
@@ -295,8 +299,30 @@ export const portfolioConfig: PortfolioConfig = {
       previewMedia: {
         image: "/assets/projects/orgmanager.jpg",
         alt: "OrgManager sign-in page for Mapúa Game Consensus",
+        video: "/assets/projects/orgmanager.mp4",
       },
       demoUrl: "https://orgmanager.vercel.app/",
+    },
+    {
+      id: "click-ko",
+      title: "Click K.O.",
+      tagline: "A Java desktop boxing game where players dodge, block, and counterpunch through three opponents.",
+      category: "Software Systems",
+      year: "2026",
+      featured: true,
+      description: "Built as a group project, Click K.O. combines mouse-driven punches with keyboard controls for dodging, blocking, and super punches. Players advance through opponents and can customize their fighter and ring.",
+      architectureOverview: "Java Swing handles input and screen rendering. A timer updates combat, while separate player and opponent classes track health, attacks, and sprite states.",
+      keyMetrics: [
+        { label: "Opponents", value: "3 standard fighters" },
+        { label: "Platform", value: "Java desktop" },
+      ],
+      technologies: ["Java", "Swing", "Apache Ant"],
+      previewMedia: {
+        image: "/assets/projects/click-ko.jpg",
+        alt: "Click K.O. boxing match showing both fighters and their health bars",
+        video: "/assets/projects/click-ko.mp4",
+      },
+      githubUrl: "https://github.com/Jedrx-m/Final_Group_Proj",
     },
   ],
 };

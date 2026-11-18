@@ -50,18 +50,16 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           </button>
         </div>
 
-        {/* Image */}
-        {project.previewMedia && (
-          <div className="relative h-64 sm:h-80 w-full bg-black overflow-hidden">
-            <img
-              src={project.previewMedia.image}
-              alt={project.previewMedia.alt}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
-          </div>
-        )}
+        {/* Project media */}
+        <video
+          src={project.previewMedia.video}
+          poster={project.previewMedia.image}
+          controls
+          playsInline
+          preload="none"
+          aria-label={`${project.title} video preview`}
+          className="aspect-video w-full bg-black"
+        />
 
         {/* Content */}
         <div className="p-6 sm:p-8 space-y-6">
@@ -123,10 +121,20 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-6 border-t border-white/10 flex items-center justify-end">
+          <div className="pt-6 border-t border-white/10 flex items-center gap-4">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-mono text-xs text-[#00ffaa] hover:underline"
+              >
+                View on GitHub
+              </a>
+            )}
             <button
               onClick={onClose}
-              className="font-mono text-xs text-[#eeedea]/40 hover:text-[#eeedea] transition-colors cursor-pointer"
+              className="ml-auto font-mono text-xs text-[#eeedea]/40 hover:text-[#eeedea] transition-colors cursor-pointer"
             >
               Close [ESC]
             </button>

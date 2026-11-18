@@ -4,16 +4,15 @@ import { ProjectItem } from '../portfolio.config';
 
 interface ProjectShowcaseProps {
   projects: ProjectItem[];
-  onHoverProject: (project: ProjectItem | null, e?: React.MouseEvent) => void;
   onSelectProject: (project: ProjectItem) => void;
 }
 
 export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   projects,
-  onHoverProject,
   onSelectProject,
 }) => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [previewProjectId, setPreviewProjectId] = useState<string | null>(null);
 
   const categories = [...new Set(projects.map((project) => project.category))];
 
@@ -34,7 +33,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             Production & Engineering Projects
           </h2>
           <p className="text-xs font-mono text-[#eeedea]/50 mt-1">
-            Select a project to visit its website.
+            Select a project to visit its website or view its details.
           </p>
         </div>
 
@@ -46,7 +45,10 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               return (
                 <button
                   key={cat}
-                  onClick={() => setActiveFilter(cat)}
+                  onClick={() => {
+                    setPreviewProjectId(null);
+                    setActiveFilter(cat);
+                  }}
                   className={`px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider rounded-xs transition-colors whitespace-nowrap cursor-pointer active:scale-95 ${
                     isActive
                       ? 'bg-[#00ffaa] text-[#0c0c0e] font-bold'
@@ -66,33 +68,53 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         {filteredProjects.map((project) => (
           <div
             key={project.id}
-            onMouseEnter={(e) => onHoverProject(project, e)}
-            onMouseMove={(e) => onHoverProject(project, e)}
-            onMouseLeave={() => onHoverProject(null)}
-            className="group relative p-6 sm:p-8 border border-white/10 hover:border-[#00ffaa] bg-white/[0.015] hover:bg-white/[0.03] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            onPointerEnter={(e) => {
+              if (
+                e.pointerType === 'mouse' &&
+                window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+              ) {
+                setPreviewProjectId(project.id);
+              }
+            }}
+            onPointerLeave={() => setPreviewProjectId(null)}
+            className="group relative p-6 sm:p-8 border border-white/10 hover:border-[#00ffaa] bg-white/[0.015] hover:bg-white/[0.03] transition-colors duration-300 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              {/* Thumbnail Media Preview inside card */}
-              {project.previewMedia && (
-                <div className="relative aspect-video w-full bg-black mb-5 overflow-hidden border border-white/10 group-hover:border-[#00ffaa]/50 transition-colors">
+              {/* This is the standard template for future project uploads. Supply a thumbnail and short
+                  video in previewMedia. Keep hover zoom and muted playback inside the media
+                  container so the description and other card content stay static. */}
+              <div className="relative aspect-video w-full bg-black mb-5 overflow-hidden border border-white/10 group-hover:border-[#00ffaa]/50 transition-colors">
+                <div className="relative h-full w-full motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105">
                   <img
                     src={project.previewMedia.image}
                     alt={project.previewMedia.alt}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
-
-                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#0c0c0e]/90 border border-white/10 text-[10px] font-mono text-[#00ffaa]">
-                    {project.category.toUpperCase()}
-                  </div>
-
-                  <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-[#00ffaa] text-[#0c0c0e] font-mono font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
-                    <Eye className="w-3 h-3" />
-                    <span>{project.demoUrl ? 'Visit site' : 'Inspect'}</span>
-                  </div>
+                  {previewProjectId === project.id && (
+                    <video
+                      src={project.previewMedia.video}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      aria-hidden="true"
+                      onPlaying={(e) => { e.currentTarget.dataset.playing = 'true'; }}
+                      className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity data-[playing=true]:opacity-100"
+                    />
+                  )}
                 </div>
-              )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent" />
+
+                <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#0c0c0e]/90 border border-white/10 text-[10px] font-mono text-[#00ffaa]">
+                  {project.category.toUpperCase()}
+                </div>
+
+                <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-[#00ffaa] text-[#0c0c0e] font-mono font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
+                  <Eye className="w-3 h-3" />
+                  <span>{project.demoUrl ? 'Visit site' : 'Inspect'}</span>
+                </div>
+              </div>
 
               {/* Meta Tag from Variation 2 */}
               <div className="flex items-center justify-between mb-2">
@@ -111,11 +133,14 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
                     {project.title}
                   </a>
                 ) : (
-                  <button type="button" onClick={() => onSelectProject(project)} className="text-left cursor-pointer after:absolute after:inset-0">
+                  <button type="button" onClick={() => {
+                    setPreviewProjectId(null);
+                    onSelectProject(project);
+                  }} className="text-left cursor-pointer after:absolute after:inset-0">
                     {project.title}
                   </button>
                 )}
-                <ArrowUpRight className="w-4 h-4 text-[#00ffaa] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="w-4 h-4 text-[#00ffaa]" />
               </h3>
 
               {/* Description */}
