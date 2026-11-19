@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         </span>
         <a
           href={`mailto:${personal.email}`}
-          className="font-syne font-extrabold text-xl sm:text-2xl text-[#eeedea] hover:text-[#00ffaa] transition-colors block uppercase tracking-tight"
+          className="font-syne font-extrabold text-base sm:text-xl xl:text-2xl break-all text-[#eeedea] hover:text-[#00ffaa] transition-colors block uppercase tracking-tight"
         >
           {personal.email}
         </a>

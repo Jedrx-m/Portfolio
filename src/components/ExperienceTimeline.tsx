@@ -12,11 +12,8 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ onResume
     <section id="experience" className="pt-16 pb-20 border-t border-white/10">
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 mb-6">
         <div>
-          <span className="font-mono text-[11px] uppercase tracking-widest text-[#eeedea]/60 block mb-1">
-            FIGURE 03: EDUCATION & BACKGROUND
-          </span>
           <h2 className="font-syne font-extrabold text-2xl text-[#eeedea] uppercase tracking-tight">
-            Academic & Practical History
+            Education & experience
           </h2>
         </div>
 
@@ -29,51 +26,52 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ onResume
       </div>
 
       <div className="space-y-6">
-        {/* Education Card */}
-        <div className="p-8 border border-white/10 bg-white/[0.015] hover:border-white/25 transition-all space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-            <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest">
-              ACADEMIC DEGREE
-            </span>
-            <span className="font-mono text-[11px] text-[#eeedea]/60">
-              {resume.education[0].graduationYear}
-            </span>
-          </div>
-
-          <h3 className="font-syne font-bold text-xl text-[#eeedea]">
-            {resume.education[0].degree}
-          </h3>
-          <p className="font-mono text-xs text-[#eeedea]/50">
-            {resume.education[0].school} — {resume.education[0].location}
-          </p>
-
-          <p className="text-xs sm:text-sm text-[#eeedea]/70 leading-relaxed pt-2">
-            <span className="text-[#eeedea]/40 font-mono uppercase text-[10px] block mb-1">Curriculum Highlights:</span>
-            {resume.education[0].coursework}
-          </p>
-        </div>
-
-        {/* Cisco Training Card */}
-        {resume.technicalTraining[0] && (
-          <div className="p-8 border border-white/10 bg-white/[0.015] hover:border-white/25 transition-all space-y-3">
+        {resume.education.map((education) => (
+          <div key={education.degree + education.school + education.graduationYear} className="p-8 border border-white/10 bg-[#0c0c0e]/70 hover:border-white/25 transition-all space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-              <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest">
-                TECHNICAL NETWORKING TRAINING
+              <span className="font-mono text-xs text-[#00ffaa] uppercase tracking-widest">
+                ACADEMIC DEGREE
               </span>
               <span className="font-mono text-[11px] text-[#eeedea]/60">
-                {resume.technicalTraining[0].period}
+                {education.graduationYear}
               </span>
             </div>
 
             <h3 className="font-syne font-bold text-xl text-[#eeedea]">
-              {resume.technicalTraining[0].title}
+              {education.degree}
             </h3>
-            <p className="font-mono text-xs text-[#eeedea]/50">
-              {resume.technicalTraining[0].institution}
+            <p className="font-mono text-xs text-[#eeedea]/75">
+              {education.school} — {education.location}
+            </p>
+
+            <p className="text-xs sm:text-sm text-[#eeedea]/70 leading-relaxed pt-2">
+              <span className="text-[#eeedea]/70 font-mono uppercase text-xs block mb-1">Curriculum Highlights:</span>
+              {education.coursework}
+            </p>
+          </div>
+        ))}
+
+        {/* Cisco Training Card */}
+        {resume.technicalTraining.map((training) => (
+          <div key={training.title + training.period} className="p-8 border border-white/10 bg-[#0c0c0e]/70 hover:border-white/25 transition-all space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="font-mono text-xs text-[#00ffaa] uppercase tracking-widest">
+                TECHNICAL NETWORKING TRAINING
+              </span>
+              <span className="font-mono text-[11px] text-[#eeedea]/60">
+                {training.period}
+              </span>
+            </div>
+
+            <h3 className="font-syne font-bold text-xl text-[#eeedea]">
+              {training.title}
+            </h3>
+            <p className="font-mono text-xs text-[#eeedea]/75">
+              {training.institution}
             </p>
 
             <ul className="space-y-1.5 pt-2 font-mono text-xs text-[#eeedea]/70">
-              {resume.technicalTraining[0].details.map((detail, idx) => (
+              {training.details.map((detail, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="text-[#00ffaa]">›</span>
                   <span>{detail}</span>
@@ -81,33 +79,33 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ onResume
               ))}
             </ul>
           </div>
-        )}
+        ))}
 
         {/* Work Experience */}
-        {resume.experience[0] && (
-          <div className="p-8 border border-white/10 bg-white/[0.015] hover:border-white/25 transition-all space-y-3">
+        {resume.experience.map((experience) => (
+          <div key={experience.role + experience.company + experience.period} className="p-8 border border-white/10 bg-[#0c0c0e]/70 hover:border-white/25 transition-all space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-              <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest">
+              <span className="font-mono text-xs text-[#00ffaa] uppercase tracking-widest">
                 OPERATIONAL EXPERIENCE
               </span>
               <span className="font-mono text-[11px] text-[#eeedea]/60">
-                {resume.experience[0].period}
+                {experience.period}
               </span>
             </div>
 
             <h3 className="font-syne font-bold text-xl text-[#eeedea]">
-              {resume.experience[0].role} <span className="font-normal text-[#00ffaa]">@ {resume.experience[0].company}</span>
+              {experience.role} <span className="font-normal text-[#00ffaa]">@ {experience.company}</span>
             </h3>
-            <p className="font-mono text-xs text-[#eeedea]/50">
-              {resume.experience[0].location}
+            <p className="font-mono text-xs text-[#eeedea]/75">
+              {experience.location}
             </p>
 
             <p className="text-xs sm:text-sm text-[#eeedea]/70 leading-relaxed pt-2">
-              {resume.experience[0].summary}
+              {experience.summary}
             </p>
 
             <ul className="space-y-1.5 pt-1 font-mono text-xs text-[#eeedea]/70">
-              {resume.experience[0].achievements.map((item, idx) => (
+              {experience.achievements.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="text-[#00ffaa]">›</span>
                   <span>{item}</span>
@@ -115,7 +113,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ onResume
               ))}
             </ul>
           </div>
-        )}
+        ))}
       </div>
     </section>
   );

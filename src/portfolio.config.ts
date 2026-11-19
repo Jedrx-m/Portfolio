@@ -242,14 +242,14 @@ export const portfolioConfig: PortfolioConfig = {
       subtext: "Cybersecurity Track (Class of 2028)",
     },
     {
-      label: "Technical Badges",
-      value: "28+",
-      subtext: "Coursera & Cisco verified credentials",
+      label: "Course certificates",
+      value: "Coursera & Cisco",
+      subtext: "See selected credentials below",
     },
     {
-      label: "Cisco CCNA Labs",
-      value: "100%",
-      subtext: "Enterprise VLANs, ACLs & OSPF configured",
+      label: "Cisco networking labs",
+      value: "Packet Tracer",
+      subtext: "VLANs, access control lists and OSPF",
     },
     {
       label: "Tech Community",

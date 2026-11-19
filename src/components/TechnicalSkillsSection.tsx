@@ -7,24 +7,18 @@ export const TechnicalSkillsSection: React.FC = () => {
   return (
     <section id="skills" className="pt-16 pb-20 border-t border-white/10">
       <div className="mb-6">
-        <span className="font-mono text-[11px] uppercase tracking-widest text-[#eeedea]/60 block mb-1">
-          FIGURE 02: TECHNICAL COMPETENCIES & CREDENTIALS
-        </span>
         <h2 className="font-syne font-extrabold text-2xl text-[#eeedea] uppercase tracking-tight">
-          Systems & Certifications
+          Skills & credentials
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 min-[1200px]:grid-cols-2 gap-6">
         {/* Core Skill Categories */}
         {resume.skillCategories.map((cat, idx) => (
           <div
             key={idx}
-            className="p-8 border border-white/10 hover:border-[#00ffaa]/60 bg-white/[0.015] transition-all space-y-4"
+            className="p-8 border border-white/10 hover:border-[#00ffaa]/60 bg-[#0c0c0e]/70 transition-all space-y-4"
           >
-            <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest block">
-              DOMAIN 0{idx + 1}
-            </span>
             <h3 className="font-syne font-bold text-lg text-[#eeedea]">
               {cat.name}
             </h3>
@@ -43,20 +37,17 @@ export const TechnicalSkillsSection: React.FC = () => {
       </div>
 
       {/* Certifications & Organizations Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <div className="grid grid-cols-1 min-[1200px]:grid-cols-2 gap-6 mt-6">
         {/* Certifications */}
-        <div className="p-8 border border-white/10 bg-white/[0.015] space-y-4">
-          <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest block">
-            VERIFIED CREDENTIALS
-          </span>
+        <div className="p-8 border border-white/10 bg-[#0c0c0e]/70 space-y-4">
           <h3 className="font-syne font-bold text-lg text-[#eeedea]">
-            Certifications (28+ Completed)
+            Selected credentials
           </h3>
           <div className="space-y-3 pt-2">
             {resume.certifications.map((cert, idx) => (
               <div key={idx} className="pb-3 border-b border-white/5 last:border-0 last:pb-0">
                 <div className="text-xs font-semibold text-[#eeedea]">{cert.title}</div>
-                <div className="font-mono text-[10px] text-[#eeedea]/50 mt-0.5">
+                <div className="font-mono text-xs text-[#eeedea]/75 mt-0.5">
                   {cert.issuer} · {cert.date}
                 </div>
               </div>
@@ -65,10 +56,7 @@ export const TechnicalSkillsSection: React.FC = () => {
         </div>
 
         {/* Organizations */}
-        <div className="p-8 border border-white/10 bg-white/[0.015] space-y-4">
-          <span className="font-mono text-[10px] text-[#00ffaa] uppercase tracking-widest block">
-            AFFILIATIONS
-          </span>
+        <div className="p-8 border border-white/10 bg-[#0c0c0e]/70 space-y-4">
           <h3 className="font-syne font-bold text-lg text-[#eeedea]">
             Tech Communities & Groups
           </h3>
@@ -76,7 +64,7 @@ export const TechnicalSkillsSection: React.FC = () => {
             {resume.organizations.map((org, idx) => (
               <div key={idx} className="p-4 bg-white/[0.02] border border-white/5 space-y-1">
                 <div className="font-syne font-bold text-sm text-[#eeedea]">{org.name}</div>
-                <div className="font-mono text-[10px] text-[#00ffaa]">{org.role} · {org.period}</div>
+                <div className="font-mono text-xs text-[#00ffaa]">{org.role} · {org.period}</div>
               </div>
             ))}
           </div>

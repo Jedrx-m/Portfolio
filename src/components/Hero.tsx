@@ -12,7 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView();
     }
   };
 
@@ -22,18 +22,18 @@ export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
       <div className="inline-flex items-center gap-3 px-3 py-1.5 border border-white/10 rounded-sm font-mono text-[11px] bg-white/[0.02] text-[#eeedea] mb-8">
         <span className="w-1.5 h-1.5 rounded-full bg-[#00ffaa] shadow-[0_0_8px_rgba(0,255,170,0.8)]" />
         <span className="tracking-wider uppercase">
-          MAPÚA UNIVERSITY IT / CYBERSECURITY
+          {personal.school} · {personal.title}
         </span>
       </div>
 
       {/* Giant Heading from Variation 2 */}
-      <h1 className="font-syne font-extrabold text-[clamp(2.75rem,5.5vw,6rem)] leading-[0.88] tracking-[-0.04em] text-[#eeedea] uppercase mb-8">
+      <h1 className="font-syne font-extrabold text-[clamp(2rem,5.5vw,6rem)] leading-[0.88] tracking-[-0.04em] text-[#eeedea] uppercase mb-8">
         BUILDING<br />SECURE SYSTEMS.
       </h1>
 
       {/* Lead Paragraph */}
       <p className="text-base sm:text-lg text-[#eeedea]/60 max-w-[650px] leading-relaxed mb-8">
-        Full-stack developer majoring in Cybersecurity. Expertise in React, TypeScript, Cisco Enterprise Networking, and Cloud Infrastructure.
+        {personal.bio}
       </p>
 
       {/* Action Buttons */}
@@ -63,16 +63,16 @@ export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
       </div>
 
       {/* Technical Metadata Matrix */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-14 mt-12 border-t border-white/10">
+      <div className="grid grid-cols-2 min-[1200px]:grid-cols-4 gap-4 pt-14 mt-12 border-t border-white/10">
         {stats.map((stat, idx) => (
           <div key={idx} className="space-y-1">
-            <span className="font-mono text-[10px] uppercase text-[#eeedea]/40 tracking-wider block">
+            <span className="font-mono text-xs uppercase text-[#eeedea]/70 tracking-wider block">
               {stat.label}
             </span>
             <div className="font-syne font-extrabold text-xl text-[#eeedea]">
               {stat.value}
             </div>
-            <p className="font-mono text-[10px] text-[#eeedea]/50 leading-tight">
+            <p className="font-mono text-xs text-[#eeedea]/75 leading-tight">
               {stat.subtext}
             </p>
           </div>

@@ -55,3 +55,58 @@
   background: var(--accent);
   color: var(--bg);
 }
+
+section[id] {
+  scroll-margin-top: 7rem;
+}
+
+h1, h2, h3 {
+  overflow-wrap: anywhere;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.portfolio-dialog {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  color: var(--ink);
+}
+
+.portfolio-dialog[open] {
+  display: grid;
+  place-items: center;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.portfolio-dialog::backdrop {
+  background: rgb(12 12 14 / 90%);
+  backdrop-filter: blur(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+@utility project-link {
+  @apply inline-flex min-h-11 items-center gap-2 border border-white/25 px-3 py-2 text-sm font-semibold text-[#eeedea] hover:border-[#00ffaa] hover:text-[#00ffaa];
+}

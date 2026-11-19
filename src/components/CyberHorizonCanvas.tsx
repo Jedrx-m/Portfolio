@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface CyberHorizonCanvasProps {
   className?: string;
@@ -18,6 +18,14 @@ interface ShootingStar {
 
 export const CyberHorizonCanvas: React.FC<CyberHorizonCanvasProps> = ({ className = '' }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(preference.matches);
+    preference.addEventListener('change', update);
+    return () => preference.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -54,7 +62,7 @@ export const CyberHorizonCanvas: React.FC<CyberHorizonCanvasProps> = ({ classNam
         alpha: 0.65,
         active: false,
         wait: initialWait,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)] ?? 'cyan',
       };
     };
 
@@ -70,6 +78,7 @@ export const CyberHorizonCanvas: React.FC<CyberHorizonCanvasProps> = ({ classNam
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      if (reducedMotion) render();
     };
 
     window.addEventListener('resize', handleResize);
@@ -236,7 +245,7 @@ export const CyberHorizonCanvas: React.FC<CyberHorizonCanvasProps> = ({ classNam
       ctx.lineTo(width, horizonY);
       ctx.stroke();
 
-      animationFrameId = requestAnimationFrame(render);
+      if (!reducedMotion) animationFrameId = requestAnimationFrame(render);
     };
 
     render();
@@ -245,7 +254,7 @@ export const CyberHorizonCanvas: React.FC<CyberHorizonCanvasProps> = ({ classNam
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <canvas
